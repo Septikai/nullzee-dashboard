@@ -1,15 +1,15 @@
 <template>
 <div class="card-container">
-  <div class="card-outer" :style="embedColour">
+  <div class="card-outer" :style="getEmbedColour">
     <div class="card-inner card">
-      <img class="avatar" alt="avatar" :src="pfpToDisplay">
+      <img class="avatar" alt="avatar" :src="getPfpToDisplay">
       <div class="main-card-content">
         <div class="row">
-          <span class="username card-item" :style="userColour"><b>{{ user.username }}#{{ user.discriminator }}{{ memberNick }}</b></span>
+          <span class="username card-item" :style="getUserColour"><b>{{ user.username }}#{{ user.discriminator }}{{ getMemberNick }}</b></span>
         </div>
         <div class="row">
-          <span class="level card-item"><b>Level:</b>&nbsp;{{ mongo_user.level }}</span>
-          <span class="vc-time card-item"><b>VC Time:</b>&nbsp;{{ vcTime }}</span>
+          <span class="level card-item"><b>Level:</b>&nbsp;{{ getLevel }}</span>
+          <span class="vc-time card-item"><b>VC Time:</b>&nbsp;{{ getVcTime }}</span>
         </div>
         <div class="row">
           <span class="registered_at card-item"><b>Registered:</b>&nbsp;{{ getAccountCreationDate }} </span>
@@ -40,29 +40,33 @@ export default {
     mongo_user: Object
   },
   computed: {
-    pfpToDisplay() {
+    getPfpToDisplay() {
       return "https://cdn.discordapp.com/avatars/" +
           this.user.id + "/" +
           this.user.avatar + ".webp?size=512";
     },
-    embedColour() {
+    getEmbedColour() {
       if (this.mongo_user && this.mongo_user.embed_colour) {
         return `background-color: #${this.mongo_user.embed_colour};`;
       }
       return "";
     },
-    userColour() {
+    getUserColour() {
       if (this.member && this.member.colour) {
         return `color: #${this.member.colour};`;
       }
       return "color: white;";
     },
-    memberNick() {
+    getMemberNick() {
       if (this.member.nick) return ` - ${this.member.nick}`;
       return "";
     },
-    vcTime() {
-      if (!this.mongo_user.vc_minutes) return "0";
+    getLevel() {
+      if (this.mongo_user) return this.mongo_user.level;
+      else return 0;
+    },
+    getVcTime() {
+      if (!this.mongo_user || !this.mongo_user.vc_minutes) return "0";
       const years = parseInt(this.mongo_user.vc_minutes / 365 / 24 / 60);
       const days = parseInt(this.mongo_user.vc_minutes / 24 / 60);
       const hours = parseInt(this.mongo_user.vc_minutes / 60 % 24);
