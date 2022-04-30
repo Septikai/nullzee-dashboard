@@ -24,7 +24,6 @@
         <div class="row card-footer">
           <span class="user-id card-item"><b>ID:</b>&nbsp;{{ user.id }}</span>
         </div>
-<!--        add server join date and account creation date somewhere-->
       </div>
     </div>
   </div>
@@ -144,12 +143,6 @@ export default {
 </script>
 
 <style scoped>
-.title {
-  font-size: 35px;
-  line-height: 35px;
-  text-align: left;
-}
-
 .card-outer {
   min-height: 190px;
 }

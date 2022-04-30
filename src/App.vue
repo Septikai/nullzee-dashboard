@@ -7,6 +7,7 @@
 
 <script>
 import Header from "@/components/Header";
+// TODO: make the lighter grey fill page height
 
 export default {
   name: 'App',

@@ -20,8 +20,8 @@
 </template>
 
 <script>
-
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
+// TODO: make the dropdown actually look like a dropdown
 
 export default {
   name: "Avatar",

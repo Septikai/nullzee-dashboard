@@ -37,9 +37,12 @@ export default {
     pfpSource() {
       if (this.isLoggedIn){
         const session_data = JSON.parse(window.localStorage.getItem("user_session_data"));
-        return "https://cdn.discordapp.com/avatars/" +
-            session_data["user_info"].id + "/" +
-            session_data["user_info"].avatar + ".webp?size=512";
+        if (session_data["user_info"].avatar) {
+          return "https://cdn.discordapp.com/avatars/" +
+              session_data["user_info"].id + "/" +
+              session_data["user_info"].avatar + ".webp?size=512";
+        }
+        return `https://cdn.discordapp.com/embed/avatars/${session_data["user_info"].discriminator % 5}.png`;
       } else {
         return "default";
       }
