@@ -40,6 +40,7 @@ export default {
   },
   computed: {
     getPfpToDisplay() {
+      console.log("https://cdn.discordapp.com/avatars/" + this.user.id + "/" + this.user.avatar + ".webp?size=512")
       return "https://cdn.discordapp.com/avatars/" +
           this.user.id + "/" +
           this.user.avatar + ".webp?size=512";

@@ -1,22 +1,24 @@
 <template>
 <div class="card-container">
-  <div class="card-outer" :style="getPunishmentColour">
+  <div class="card-outer" :style="getEmbedColour">
     <div class="card-inner card">
+      <img class="avatar" alt="avatar" :src="getModPfp">
       <div class="main-card-content">
         <div class="row">
-<!--          <img class="avatar card-item" alt="avatar" src=""-->
-          <span class="offender card-item"><b>{{ punishment.type }}</b></span>
+          <span class="type card-item" :style="getTypeColour"><b>{{ punishment.type.charAt(0).toUpperCase() + punishment.type.slice(1) }}</b></span>
         </div>
         <div class="row">
-          <span class="type card-item" :style="getPunishmentColour"><b>{{ punishment.type }}</b></span>
+          <span class="reason card-item"><b>Reason:&nbsp;</b>{{ punishment.reason.charAt(0).toUpperCase() + punishment.reason.slice(1) }}</span>
         </div>
 <!--        <div class="row">-->
 <!--          <span class="level card-item"><b>Level:</b>&nbsp;{{ getLevel }}</span>-->
 <!--          <span class="vc-time card-item"><b>VC Time:</b>&nbsp;{{ getVcTime }}</span>-->
 <!--        </div>-->
-<!--        <div class="row card-footer">-->
-<!--          <span class="user-id card-item"><b>ID:</b>&nbsp;{{ user.id }}</span>-->
-<!--        </div>-->
+        <div class="row card-footer">
+          <span class="mod-name card-item"><b>Moderator:&nbsp;</b>{{ punishment.mod_username }}</span>
+          <span class="mod-id card-item"><b>Moderator ID:&nbsp;</b>{{ punishment.mod_id }}</span>
+          <span class="timestamp card-item"><b>Timestamp:&nbsp;</b>{{ getTimeStamp }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -30,16 +32,36 @@ export default {
     punishment: Object
   },
   computed: {
+    getModPfp() {
+      return "https://cdn.discordapp.com/avatars/" +
+          this.punishment.mod_id + "/" +
+          this.punishment.mod_pfp + ".webp?size=512";
+    },
+    getEmbedColour() {
+      return `background-${this.getPunishmentColour}`
+    },
+    getTypeColour() {
+      return this.getPunishmentColour;
+    },
     getPunishmentColour() {
       const colours = {
-        "warn": 0xF7FF00,
-        "mute": 0xFF8F00,
-        "kick": 0xFF5D00,
-        "ban": 0xFF0000
+        "warn": "#F7FF00",
+        "mute": "#FF8F00",
+        "kick": "#FF5D00",
+        "ban": "#FF0000"
       }
       console.log(this.$props)
       console.log(this.punishment);
-      return colours[this.punishment.type];
+      return `color: ${colours[this.punishment.type]}`;
+    },
+    getTimeStamp() {
+      const format_options = {
+        hour12: false,
+        year: 'numeric', month: 'numeric', day: 'numeric',
+        hour: "2-digit", minute: "2-digit"
+      };
+      const unix_date = new Date(this.punishment.timestamp * 1000);
+      return unix_date.toLocaleString("en-GB", format_options)
     }
   }
 }
@@ -47,15 +69,17 @@ export default {
 
 <style scoped>
 .card-container {
-  min-height: 190px;
+  min-height: 100px;
+  padding-bottom: 16px;
 }
 
 .card-outer {
-  min-height: 190px;
-  width: 90%;
+  width: 100%;
 }
 
 .avatar {
+  height: 100px;
+  width: auto;
   border-radius: 50%;
   align-self: center;
 }

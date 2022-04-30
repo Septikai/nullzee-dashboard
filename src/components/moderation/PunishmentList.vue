@@ -1,6 +1,7 @@
 <template>
 <div class="main">
-  <PunishmentCard v-for="punishment in getPunishments" :punishment="getPunishments[punishment]" :key="punishment.id"/>
+  <span class="title"><b>Punishment History</b></span>
+  <PunishmentCard v-for="punishment in getPunishments" :punishment="punishment" :key="punishment.id"/>
 </div>
 </template>
 
@@ -28,5 +29,10 @@ export default {
 </script>
 
 <style scoped>
-
+.title {
+  font-size: 25px;
+  line-height: 25px;
+  padding-bottom: 10px;
+  align-self: flex-start;
+}
 </style>
