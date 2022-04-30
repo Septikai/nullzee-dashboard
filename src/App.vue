@@ -61,7 +61,6 @@ body {
 }
 
 .card-outer {
-  width: 60%;
   display: flex;
   border-radius: 10px;
   background-color: #303030;;

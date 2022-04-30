@@ -39,7 +39,22 @@ const router = createRouter({
             path: "/profile",
             name: "Profile",
             component: Profile,
-            includeInHeader: false
+            includeInHeader: false,
+            beforeEnter(to, from) {
+                console.log("test")
+                const session_data = window.localStorage.getItem("user_session_data");
+                if (session_data === "undefined" || session_data === null) {
+                    console.log(to.path.split('/').slice(1));
+                    console.log(to.query);
+                    console.log(to.hash);
+                    return {
+                        name: "NotFound",
+                        params: { pathMatch: to.path.split('/').slice(1) },
+                        query: to.query,
+                        hash: to.hash,
+                    }
+                }
+            }
         },
         {
             path: "/users/:id(\\d+)",

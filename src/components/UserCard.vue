@@ -134,8 +134,6 @@ export default {
           join_date.getUTCFullYear(), join_date.getUTCMonth(), join_date.getUTCDate(),
           join_date.getUTCHours(), join_date.getUTCMinutes(), join_date.getUTCSeconds()
       );
-      console.log(join_date)
-      console.log(join_date_utc)
       return join_date_utc.toLocaleString("en-GB", format_options)
     }
   }
@@ -145,6 +143,7 @@ export default {
 <style scoped>
 .card-outer {
   min-height: 190px;
+  width: 60%;
 }
 
 .avatar {
@@ -172,14 +171,15 @@ export default {
   display: flex;
 }
 
-.username {
-  font-size: 25px;
-}
-
 .card-footer {
   margin-top: auto;
   padding-top: 6px;
   font-size: 12px;
+}
+
+.username {
+  font-size: 25px;
+  text-align: left;
 }
 
 .role-info {
