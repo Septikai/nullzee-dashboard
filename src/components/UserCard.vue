@@ -5,7 +5,7 @@
       <img class="avatar" alt="avatar" :src="pfpToDisplay">
       <div class="main-card-content">
         <div class="row">
-          <span class="username card-item" :style="userColour"><b>{{ user.username }}#{{ user.discriminator }}&nbsp;-&nbsp;{{ member.nick }}</b></span>
+          <span class="username card-item" :style="userColour"><b>{{ user.username }}#{{ user.discriminator }}{{ memberNick }}</b></span>
         </div>
         <div class="row">
           <span class="level card-item"><b>Level:</b>&nbsp;{{ mongo_user.level }}</span>
@@ -56,6 +56,10 @@ export default {
         return `color: #${this.member.colour};`;
       }
       return "color: white;";
+    },
+    memberNick() {
+      if (this.member.nick) return ` - ${this.member.nick}`;
+      return "";
     },
     vcTime() {
       if (!this.mongo_user.vc_minutes) return "0";
