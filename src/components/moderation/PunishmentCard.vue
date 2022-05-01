@@ -5,15 +5,14 @@
       <img class="avatar" alt="avatar" :src="getModPfp">
       <div class="main-card-content">
         <div class="row">
-          <span class="type card-item" :style="getTypeColour"><b>{{ punishment.type.charAt(0).toUpperCase() + punishment.type.slice(1) }}</b></span>
+          <span class="type card-item">
+            <span :style="getTypeColour"><b><a :href="getPunishmentLink">{{ punishment.type.charAt(0).toUpperCase() + punishment.type.slice(1) }}</a></b></span>
+            <span :v-if="punishment.expired" class="expired">&nbsp;-&nbsp;Expired</span>
+          </span>
         </div>
         <div class="row">
           <span class="reason card-item"><b>Reason:&nbsp;</b>{{ punishment.reason.charAt(0).toUpperCase() + punishment.reason.slice(1) }}</span>
         </div>
-<!--        <div class="row">-->
-<!--          <span class="level card-item"><b>Level:</b>&nbsp;{{ getLevel }}</span>-->
-<!--          <span class="vc-time card-item"><b>VC Time:</b>&nbsp;{{ getVcTime }}</span>-->
-<!--        </div>-->
         <div class="row card-footer">
           <span class="mod-name card-item"><b>Moderator:&nbsp;</b>{{ punishment.mod_username }}</span>
           <span class="mod-id card-item"><b>Moderator ID:&nbsp;</b>{{ punishment.mod_id }}</span>
@@ -53,6 +52,10 @@ export default {
       console.log(this.$props)
       console.log(this.punishment);
       return `color: ${colours[this.punishment.type]}`;
+    },
+    getPunishmentLink() {
+      const link_section = this.punishment.message.split("-");
+      return `https://discord.com/channels/${link_section[0]}/${link_section[1]}/${link_section[2]}`
     },
     getTimeStamp() {
       const format_options = {
@@ -115,5 +118,9 @@ export default {
 
 .reason {
   text-align: left;
+}
+
+.expired {
+  color: grey;
 }
 </style>
