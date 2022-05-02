@@ -40,6 +40,7 @@ export default {
   },
   computed: {
     getPfpToDisplay() {
+      console.log(this.user)
       console.log("https://cdn.discordapp.com/avatars/" + this.user.id + "/" + this.user.avatar + ".webp?size=512")
       return "https://cdn.discordapp.com/avatars/" +
           this.user.id + "/" +
@@ -125,6 +126,9 @@ export default {
       return unix_date.toLocaleString("en-GB", format_options)
     },
     getJoinDate() {
+      if (this.member.joined_at === undefined) {
+        return "N/A"
+      }
       const format_options = {
         hour12: false,
         year: 'numeric', month: 'numeric', day: 'numeric',

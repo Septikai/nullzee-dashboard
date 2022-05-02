@@ -3,8 +3,11 @@ import Home from "@/views/Home.vue";
 import Dashboard from "@/views/Dashboard";
 import OAuth2Callback from "@/views/OAuth2Callback";
 import Profile from "@/views/Profile";
+import Users from "@/views/Users";
 import UserDisplay from "@/views/UserDisplay";
 import NotFound from "@/views/NotFound";
+
+import Leaderboard from "@/components/users/Leaderboard"
 
 const router = createRouter({
     history: createWebHistory(),
@@ -57,29 +60,26 @@ const router = createRouter({
             }
         },
         {
-            path: "/users/:id(\\d+)",
-            name: "User",
-            component: UserDisplay,
-            includeInHeader: false,
-            props: true
+            path: "/users",
+            name: "Users",
+            component: Users,
+            includeInHeader: true,
+            children: [
+                {
+                    path: ":id(\\d+)",
+                    component: UserDisplay,
+                    props: true,
+                },
+                {
+                    path: ":catchAll(.+)",
+                    component: NotFound
+                },
+                {
+                    path: "",
+                    component: Leaderboard
+                }
+            ]
         }
-        // {
-        //     path: "/users",
-        //     name: "User",
-        //     component: NotFound,
-        //     includeInHeader: false,
-        //     children: [
-        //         {
-        //             path: ":catchall(.*)",
-        //             component: NotFound,
-        //         },
-        //         {
-        //             path: "/:id(\\d+)",
-        //             component: UserDisplay,
-        //             props: true
-        //         }
-        //     ]
-        // }
     ]
 });
 

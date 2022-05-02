@@ -2,7 +2,7 @@
 <div class="main">
   <template v-if="this.current_user !== undefined">
     <UserCard :user="getUser" :member="getMember" :mongo_user="getMongoDataForUser"/>
-    <template v-if="getIsStaff">
+    <template v-if="getIsStaff && Object.keys(this.punishments).length !== 0">
       <PunishmentList :punishments="this.punishments"/>
     </template>
   </template>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import UserCard from "../components/UserCard";
+import UserCard from "../components/users/UserCard";
 import PunishmentList from "../components/moderation/PunishmentList";
 
 export default {
@@ -29,6 +29,7 @@ export default {
     }
   },
   created: async function() {
+    console.log(this.punishments)
     console.log(this.$route.params.id)
     const user_response = await fetch(`http://localhost:80/api/users/${this.$route.params.id}`, {method: "GET"});
     if (!user_response.ok) {
@@ -44,6 +45,7 @@ export default {
         return;
       }
       const punishments_text = await punishments_response.text();
+      console.log("e")
       console.log(punishments_text);
       console.log(JSON.parse(punishments_text).punishments);
       this.punishments = JSON.parse(punishments_text).punishments;
@@ -51,8 +53,14 @@ export default {
   },
   computed: {
     getUser() {
-      console.log(this.current_user["member_info"]["user"]);
-      return this.current_user["member_info"]["user"];
+      if (this.current_user["member_info"]["is_member"]) {
+        console.log(this.current_user["member_info"]["user"]);
+        return this.current_user["member_info"]["user"];
+      }
+      else {
+        console.log(this.current_user["member_info"]);
+        return this.current_user["member_info"];
+      }
     },
     getMember() {
       console.log(this.current_user["member_info"]);

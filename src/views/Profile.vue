@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import UserCard from "../components/UserCard";
+import UserCard from "../components/users/UserCard";
 
 export default {
   name: "Profile",
